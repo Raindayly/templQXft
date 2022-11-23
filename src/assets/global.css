@@ -1,0 +1,206 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+html,body{
+    height: 100%;
+}
+#app{
+    height: 100%;
+}
+.pointer{
+    cursor: pointer;
+}
+.mgl10{
+    margin-left: 10px;
+}
+.mgr10{
+    margin-right: 10px;
+}
+.mgt10{
+    margin-top: 10px;
+}
+.mgb10{
+    margin-bottom: 10px;
+}
+.mgl20{
+    margin-left: 20px;
+}
+.mgr20{
+    margin-right: 20px;
+}
+.mgt20{
+    margin-top: 20px;
+}
+.mgb20{
+    margin-bottom: 20px;
+}
+.mgl40{
+    margin-left: 40px;
+}
+.mgr40{
+    margin-right: 40px;
+}
+.mgt40{
+    margin-top: 40px;
+}
+.mgb40{
+    margin-bottom: 40px;
+}
+.mgl50{
+    margin-left: 50px;
+}
+.mgr50{
+    margin-right: 50px;
+}
+.mgt50{
+    margin-top: 50px;
+}
+.mgb50{
+    margin-bottom: 50px;
+}
+.mgl60{
+    margin-left: 60px;
+}
+.mgr60{
+    margin-right: 60px;
+}
+.mgt60{
+    margin-top: 60px;
+}
+.mgb60{
+    margin-bottom: 60px;
+}
+.mgl70{
+    margin-left: 70px;
+}
+.mgr70{
+    margin-right: 70px;
+}
+.mgt70{
+    margin-top: 70px;
+}
+.mgb70{
+    margin-bottom: 70px;
+}
+.mgl80{
+    margin-left: 80px;
+}
+.mgr80{
+    margin-right: 80px;
+}
+.mgt80{
+    margin-top: 80px;
+}
+.mgb80{
+    margin-bottom: 80px;
+}
+.wh100{
+    width: 100px;
+    height: 100px;
+}
+.wh200{
+    width: 200px;
+    height: 200px;
+}
+.wh300{
+    width: 300px;
+    height: 300px;
+}
+.wh400{
+    width: 400px;
+    height: 400px;
+}
+.wh500{
+    width: 500px;
+    height: 500px;
+}
+.wh600{
+    width: 600px;
+    height: 600px;
+}
+.wh700{
+    width: 700px;
+    height: 700px;
+}
+.wh800{
+    width: 800px;
+    height: 800px;
+}
+.wh800{
+    width: 800px;
+    height: 800px;
+}
+.wh900{
+    width: 900px;
+    height: 900px;
+}
+.wh1000{
+    width: 1000px;
+    height: 1000px;
+}
+.w100{
+    width: 100px;
+}
+.w200{
+    width: 200px;
+}
+.w300{
+    width: 300px;
+}
+.w400{
+    width: 400px;
+}
+.w500{
+    width: 500px;
+}
+.w600{
+    width: 600px;
+}
+.w700{
+    width: 700px;
+}
+.w800{
+    width: 800px;
+}
+.w900{
+    width: 900px;
+}
+.w1000{
+    width: 1000px;
+}
+.h100{
+    height: 100px;
+}
+.h200{
+    height: 200px;
+}
+.h300{
+    height: 300px;
+}
+.h400{
+    height: 400px;
+}
+.h500{
+    height: 500px;
+}
+.h600{
+    height: 600px;
+}
+.h700{
+    height: 700px;
+}
+.h800{
+    height: 800px;
+}
+.h900{
+    height: 900px;
+}
+.h1000{
+    height: 1000px;
+}
+.flex{
+    display: flex;
+}

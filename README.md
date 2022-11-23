@@ -1,2 +1,19 @@
-# templQXft
-一个权限登陆注册用户管理模块的前端模版,基于vue,elementui,webpack,springboot,jwt的前后端分离项目前端部分
+# newvue
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

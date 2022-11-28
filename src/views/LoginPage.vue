@@ -1,10 +1,8 @@
 <template>
   <div class="background">
-
     <div class="loginboxcontainer">
       <el-card class="login-box" shadow="hover">
         <el-form :rules="rules" ref="ruleLoginForm" validate-on-rule-change v-show="isLoginStatus" label-position="top" label-width="80px" :model="submitLoginForm">
-          <h3 style="text-align: center;margin-bottom: 10px">登录</h3>
           <el-form-item prop="username" label="用户名">
             <el-input v-model="submitLoginForm.username" clearable></el-input>
           </el-form-item>
@@ -26,16 +24,13 @@
         </el-form>
         <div class="login-btn-box">
           <div style="display:inline-block;position: relative;left: 50%;transform: translateX(-50%)">
-
             <el-button  v-show="isLoginStatus" class="login-btn" type="primary" @click="handleSubmitLoginForm">登录</el-button>
             <el-button v-show="!isLoginStatus" class="login-btn" type="primary" @click="handleChangeStatus">返回登录</el-button>
             <el-button v-show="isLoginStatus" class="login-btn" type="primary" @click="handleChangeStatus">注册</el-button>
             <el-button v-show="!isLoginStatus" class="login-btn" type="primary" @click="handleSignIn">注册</el-button>
-
           </div>
         </div>
       </el-card>
-
     </div>
   </div>
 
@@ -43,7 +38,7 @@
 <script>
   import requset from "../utils/request";
   import {handleRouter, setRoutes} from "../router";
-  import {getstore, setstore} from "../utils/localstoreage";
+  import {getStore, setStore} from "../utils/localstoreage";
 
   export default {
     data() {
@@ -95,15 +90,10 @@
                 localStorage.setItem("token",res.data)
                 requset.get("/user/userinfo").then(userres=>{
                   if(res.code == "200") {
-
-                    // console.log(userres.data)
-                    // console.log(JSON.parse(userres.data))
-                    // let menus = handleRouter(userres.data.menus)
-
                     localStorage.setItem("menus",JSON.stringify(userres.data.menus))
                     localStorage.setItem("user",JSON.stringify(userres.data))
                     this.$message.success("登录成功")
-                    setstore("isTokenTimeOut","false")
+                    setStore("isTokenTimeOut","false")
                     this.$router.push('/').catch(()=>{})
                   }
                 })
@@ -142,40 +132,44 @@
       }
     },
     created() {
-      if(getstore("isTokenTimeOut") === "true"){
+      if(getStore("isTokenTimeOut") === "true"){
         this.$message.error("登录超时,请重新登录")
       }
     }
   }
 </script>
 <style scoped>
-  .login-box {
-    width: 300px;
-    margin: auto;
-    border-radius: 20px;
+.login-box {
+  width: 300px;
+  margin: auto;
+  border-radius: 20px;
 
-  }
+}
 
-  .loginboxcontainer {
-    position: relative;
-    top: 25vh;
+.loginboxcontainer {
+  position: relative;
+  top: 25vh;
 
-  }
-  .login-btn-box{
-    position: relative;
+}
 
-  }
-  .login-btn {
-    margin: 10px 20px;
-    background: #ae6ab9;
-    border-color:  #ae6ab9;
-  }
-  .login-btn:hover{
-    border-color: #b37eb9;
-    background: #b37eb9;
-  }
-  .background{
-    background: linear-gradient(#3d92ff, pink);
-    height: 100vh;
-  }
+.login-btn-box {
+  position: relative;
+
+}
+
+.login-btn {
+  margin: 10px 20px;
+  background: #ae6ab9;
+  border-color: #ae6ab9;
+}
+
+.login-btn:hover {
+  border-color: #b37eb9;
+  background: #b37eb9;
+}
+
+.background {
+  background: linear-gradient(#3d92ff, pink);
+  height: 100vh;
+}
 </style>

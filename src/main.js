@@ -8,7 +8,8 @@ import request from "@/utils/request";
 import VueRouter from "vue-router";
 import store from './store'
 import * as echarts from 'echarts';
-import {getstore} from "@/utils/localstoreage";
+import '@/styles/element-variables.scss'
+import {getStore} from "@/utils/localstoreage";
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;

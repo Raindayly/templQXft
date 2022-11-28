@@ -1,7 +1,6 @@
 import axios from "axios";
 import {vm} from "@/main";
-import de from "element-ui/src/locale/lang/de";
-import {setstore} from "@/utils/localstoreage";
+import {setStore} from "@/utils/localstoreage";
 
 const requset = axios.create({
   baseURL: 'http://localhost:9090',
@@ -26,7 +25,7 @@ requset.interceptors.response.use(response => {
     return res
   }
   if(res.code == "401"){
-    setstore("isTokenTimeOut","true")
+    setStore("isTokenTimeOut","true")
   }
   return res
 }),error => {

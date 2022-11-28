@@ -1,5 +1,5 @@
 import VueRouter from "vue-router";
-import { getstore, setstore } from "@/utils/localstoreage";
+import { getStore, setStore } from "@/utils/localstoreage";
 import { vm } from "@/main"
 
 
@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/LoginPage')
+    component: () => import('@/views/login/login/login.vue')
   }
 ];
 
@@ -20,28 +20,28 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-const originalPush = VueRouter.prototype.push
-const originalReplace = VueRouter.prototype.replace
-// push
-VueRouter.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
-  return originalPush.call(this, location).catch(err => err)
-};
-// replace
-VueRouter.prototype.replace = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
-  return originalReplace.call(this, location).catch(err => err)
-};
+// const originalPush = VueRouter.prototype.push
+// const originalReplace = VueRouter.prototype.replace
+// // push
+// VueRouter.prototype.push = function push(location, onResolve, onReject) {
+//   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+//   return originalPush.call(this, location).catch(err => err)
+// };
+// // replace
+// VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+//   if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+//   return originalReplace.call(this, location).catch(err => err)
+// };
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
     next();
     return
   }
-  let isTokenTimeOut = getstore("isTokenTimeOut")
+  let isTokenTimeOut = getStore("isTokenTimeOut")
   if (isTokenTimeOut == null) {
-    if (getstore("user") != null) {
-      setstore("isTokenTimeOut", "false")
+    if (getStore("user") != null) {
+      setStore("isTokenTimeOut", "false")
       next()
     } else {
       tempMenus = []
@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
       vm.$message.error("本地存储丢失,请重新登录!")
     }
   } else if (isTokenTimeOut) {
-    setstore("isTokenTimeOut", "false")
+    setStore("isTokenTimeOut", "false")
     next("/login")
     vm.$message.error("认证过期,请重新登录!")
   } else {
@@ -79,7 +79,7 @@ export const setRoutes = () => {
     }
     return result;
   }
-  const menus = getstore("menus")
+  const menus = getStore("menus")
   if (!menus) return
   tempMenus = menus
   constantRoute = handleRouter(menus)

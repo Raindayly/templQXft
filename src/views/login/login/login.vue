@@ -3,12 +3,13 @@
         <div class="position-absolute right-0 top-0">
             <el-switch
                 v-model="theme"
-                active-color="#ffffff"
-                inactive-color="#000000"
+                active-color="#333"
+                inactive-color="#999"
+                @change="wicg"
                 >
             </el-switch>
         </div>
-        <div>
+        <div class="all">
             <el-form :rules="submitValidate" ref="loginForm" >
                 <el-form-item prop="username" label="用户名">
                     <el-input v-model="submitForm.userName"></el-input>
@@ -18,7 +19,7 @@
                         <el-input v-model="submitForm.password"></el-input>
                     </el-form-item>
                     <el-form-item style="margin-top: 45px;">
-                        <el-button style="width:300px">登录</el-button>
+                        <el-button @click="login" style="width:300px">登录</el-button>
                     </el-form-item>
                     <a href="" class="label-link position-absolute right-0" style="top:10px">忘记密码?</a>
                 </div>
@@ -33,6 +34,7 @@
     </div>
 </template>
 <script>
+import utils from '@/libs/utils';
 export default {
     data() {
         return {
@@ -41,19 +43,35 @@ export default {
                 password:''
             },
             submitValidate:{
-
+                
             },
             theme:true
         }
     },
+    methods: {
+        wicg(value){
+            if(value){
+                window.document.documentElement.setAttribute("theme","light");
+            }else{
+                window.document.documentElement.setAttribute("theme","dark");
+            }
+        },
+        login(){
+            console.log(utils.md5(this.submitForm.password));
+        }
+
+    },
 }
 </script>
-<style>
-@import '@/styles/common.css';
+<style lang="scss">
+@import '@/styles/common.scss';
+@import '@/styles/mixin.scss';
+
 .loginBg {
-    background-color: var(--color-bg-default);
+    background-color: var(--test-var-color);
 }
-.login-callout{
+
+.login-callout {
     padding: 16px 16px;
     text-align: center;
     border: 1px solid var(--color-border-default);
@@ -62,4 +80,9 @@ export default {
     font-size: var(--size-font-default);
     line-height: var(--size-font-default);
 }
+
+// .all {
+//     @include background-main-color($background-main-color1);
+//     @include font-main-color($font-main-color1) //background-main-color 为mixin中定义的名称，括号里为theme中声明的值。
+// }
 </style>

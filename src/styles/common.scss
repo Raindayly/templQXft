@@ -4,7 +4,7 @@
     justify-content: center;
 }
 
-.label-link{
+.label-link {
     float: right;
     font-size: 12px;
 }
@@ -12,19 +12,25 @@
 .position-relative {
     position: relative !important;
 }
+
 .position-absolute {
     position: absolute !important;
 }
+
 .right-0 {
     right: 0 !important;
-} 
+}
+
 .top-0 {
     top: 0 !important;
 }
-:root {
-    --color-bg-default:#ffffff;
-    --color-font-default:#ffffff;
-    --color-border-default:#d0d7de;
-    --color-font-black:#000000;
-    --size-font-default:16px;
+
+@import '@/styles/mixin.scss';
+
+[theme="dark"] {
+    @include theme-dark
+}
+
+[theme="light"] {
+    @include theme-light
 }

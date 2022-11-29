@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getStore, setStore } from "@/utils/localstoreage.js"
 
 // 超时设定
 axios.defaults.timeout = 300000;
@@ -73,3 +74,194 @@ axios.interceptors.response.use(response => {
     Message.error(err.toString());
     return Promise.resolve(err);
 })
+
+export const getRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'get',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'accessToken': accessToken,
+        }
+    });
+};
+
+export const postRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'accessToken': accessToken,
+        },
+    });
+};
+
+// json提交复杂参数
+export const postComplexRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        headers: {
+            'Content-Type': 'application/json',
+            'accessToken': accessToken,
+        }
+    });
+};
+
+export const importRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'accessToken': accessToken,
+        }
+    });
+};
+
+export const putRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'put',
+        url: `${url}`,
+        data: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'accessToken': accessToken,
+        }
+    });
+};
+export const putComplexRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'put',
+        url: `${url}`,
+        data: params,
+        headers: {
+            'Content-Type': 'application/json',
+            'accessToken': accessToken,
+        }
+    });
+};
+export const deleteRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'delete',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'accessToken': accessToken,
+        }
+    });
+};
+export const deleteComplexRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'delete',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'Content-Type': 'application/json',
+            'accessToken': accessToken,
+        }
+    });
+};
+
+export const uploadFileRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'accessToken': accessToken,
+        }
+    });
+
+};
+// 下载 post
+export const fileUpload = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        headers: {
+            'Content-Type': 'application/json',
+            'accessToken': accessToken,
+        },
+        responseType: 'blob'
+    });
+};
+//导出excel
+export const excelExport = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'get',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'Content-Type': 'application/json',
+            'accessToken': accessToken,
+        },
+        responseType: 'blob'
+    });
+};
+
+//post header自定义参数
+export const postHeaderRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'accessToken': accessToken,
+            'userId': JSON.parse(getStore("userInfo")).username
+        },
+    });
+};
+
+//get header自定义参数
+export const getHeaderRequest = (url, params) => {
+    let accessToken = getStore('accessToken')
+    return axios({
+        method: 'get',
+        url: `${url}`,
+        params: params,
+        headers: {
+            'accessToken': accessToken,
+            'userId': JSON.parse(getStore("userInfo")).username
+        }
+    });
+};

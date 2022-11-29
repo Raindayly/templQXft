@@ -1,0 +1,10 @@
+// @import "./testTheme.scss";
+
+
+@mixin theme-light {
+    --test-var-color: #ffffff
+}
+
+@mixin theme-dark {
+    --test-var-color: #000000
+}

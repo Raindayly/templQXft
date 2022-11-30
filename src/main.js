@@ -10,6 +10,7 @@ import store from './store'
 import * as echarts from 'echarts';
 import '@/styles/element-variables.scss'
 import {getStore} from "@/utils/localstoreage";
+import utils from "@/libs/utils.js"
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
@@ -21,5 +22,8 @@ export const vm = new Vue({
   router,
   store:store,
   render: h => h(App),
+  mounted() {
+    utils.initRouter(this)
+  },
 }).$mount('#app')
 

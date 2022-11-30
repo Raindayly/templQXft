@@ -1,8 +1,12 @@
 const utils = {}
 import { hexMd5 } from "./md5.js";
 
-utils.initRoute = function () {
+utils.initRoute = function (vm) {
+    //判断用户是否登录
+    
+    //过滤路由格式
 
+    //添加路由
 }
 
 utils.md5 = function (s){

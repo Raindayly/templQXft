@@ -1,5 +1,5 @@
 export const getStore = (v) => {
-  return localStorage.getItem(v) ? JSON.parse(localStorage.getItem(v)) : null
+  return localStorage.getItem(v)
 }
 
 export const rmStore = (v) => {

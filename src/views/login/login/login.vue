@@ -35,6 +35,8 @@
 </template>
 <script>
 import utils from '@/libs/utils';
+import {getStore , setStore} from '@/utils/localstoreage.js'
+import { login } from '@/apis/userInfo.js'
 export default {
     data() {
         return {
@@ -43,7 +45,7 @@ export default {
                 password:''
             },
             submitValidate:{
-                
+
             },
             theme:true
         }
@@ -57,7 +59,14 @@ export default {
             }
         },
         login(){
-            console.log(utils.md5(this.submitForm.password));
+            login(this.submitForm).then(res=>{
+                if(res.code = '200'){
+                    setStore("token",res.data)
+                    //拿token去获取用户信息
+                    
+                    this.$router.push("home")
+                }
+            })
         }
 
     },

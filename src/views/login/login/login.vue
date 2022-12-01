@@ -60,7 +60,8 @@ export default {
         },
         login(){
             login(this.submitForm).then(res=>{
-                if(res.code = '200'){
+                if(res.success){
+                    this.$message.success("登录成功")
                     setStore("token",res.result)
                     //拿token去获取用户信息
                     getMenus().then(res=>{

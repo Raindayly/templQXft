@@ -4,19 +4,21 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/global.css';
-import request from "@/utils/request";
 import VueRouter from "vue-router";
 import store from './store'
 import * as echarts from 'echarts';
 import '@/styles/element-variables.scss'
-import {getStore} from "@/utils/localstoreage";
 import utils from "@/libs/utils.js"
+
+import { initVuePrototype } from "@/libs/initVuePrototype.js"
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 Vue.use(ElementUI,{size:'small'});
-Vue.prototype.request = request;
 Vue.use(VueRouter)
+
+//初始化vue原型
+initVuePrototype(Vue)
 
 export const vm = new Vue({
   router,

@@ -36,7 +36,7 @@
 <script>
 import utils from '@/libs/utils';
 import {getStore , setStore} from '@/utils/localstoreage.js'
-import { login , getMenus} from '@/apis/userInfo.js'
+import { login , getUser } from '@/apis/userInfo.js'
 export default {
     data() {
         return {
@@ -58,23 +58,21 @@ export default {
                 window.document.documentElement.setAttribute("theme","dark");
             }
         },
-        login(){
-            login(this.submitForm)
-            .then(res=>{
-                if(res.success){
-                    this.$message.success("登录成功")
-                    setStore("token",res.result)
-                }else{
-                    throw new Error("登录失败")
-                }
-            })
-            .then(()=>{
-                getMenus().then(res=>{
-                    this.$store.commit("vuexSetMenus",res.result)
-                })
-            })
-        }
+        async login(){
+            try {
+                const loginRes = await login(this.submitForm)
+                this.throwError(loginRes)
+                this.$message.success(loginRes.message)
+                const userRes = await getUser()
+                console.log(userRes);
+                setStore("userInfo",userRes.result)
+                utils.initRouter(this)
+            } catch (error) {
+                this.$message.error(error)
+            }
 
+        },
+        
     },
 }
 </script>

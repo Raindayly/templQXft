@@ -7,5 +7,9 @@ export const rmStore = (v) => {
 }
 
 export const setStore = (k, v) => {
-  localStorage.setItem(k, v)
+  let data = v
+  if(v instanceof Object){
+    data = JSON.stringify(v)
+  }
+  localStorage.setItem(k, data)
 }

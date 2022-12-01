@@ -10,3 +10,7 @@ export const getMenus = function (params) {
     return getRequest(baseUrl+'/menu/allmenus',params)
 }
 
+export const getUser = function (params) {
+    return getRequest(baseUrl+'/user',params)
+}
+

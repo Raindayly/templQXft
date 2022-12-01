@@ -59,16 +59,19 @@ export default {
             }
         },
         login(){
-            login(this.submitForm).then(res=>{
+            login(this.submitForm)
+            .then(res=>{
                 if(res.success){
                     this.$message.success("登录成功")
                     setStore("token",res.result)
-                    //拿token去获取用户信息
-                    getMenus().then(res=>{
-                        console.log(res);
-                    })
-                    // this.$router.push("home")
+                }else{
+                    throw new Error("登录失败")
                 }
+            })
+            .then(()=>{
+                getMenus().then(res=>{
+                    this.$store.commit("vuexSetMenus",res.result)
+                })
             })
         }
 

@@ -15,19 +15,7 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
-    const data = response.data
-    if(!data.success){
-        if(data.message !== null){
-            Message.error(data.message)
-        }else{
-            Message.error("未知错误")
-        }
-    }
-    return data;
-}, (err) => {
-    // 返回状态码不为200时候的错误处理
-    Message.error(err.toString());
-    return Promise.resolve(err);
+    return response.data
 })
 
 export const getRequest = (url, params) => {

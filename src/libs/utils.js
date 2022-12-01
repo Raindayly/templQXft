@@ -1,7 +1,7 @@
 const utils = {}
 import { hexMd5 } from "./md5.js";
 
-utils.initRoute = function (vm) {
+utils.initRouter = function (vm) {
     //判断用户是否登录
     
     //过滤路由格式

@@ -1,7 +1,11 @@
 const pageInfo = {
     state: {
-        
+        menus:[]
     },
-    mutations: {}
+    mutations: {
+        vuexSetMenus (state,data) {
+            state.menus = data
+        }
+    }
 }
 export default pageInfo;

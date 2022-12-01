@@ -36,7 +36,7 @@
 <script>
 import utils from '@/libs/utils';
 import {getStore , setStore} from '@/utils/localstoreage.js'
-import { login } from '@/apis/userInfo.js'
+import { login , getMenus} from '@/apis/userInfo.js'
 export default {
     data() {
         return {
@@ -61,10 +61,12 @@ export default {
         login(){
             login(this.submitForm).then(res=>{
                 if(res.code = '200'){
-                    setStore("token",res.data)
+                    setStore("token",res.result)
                     //拿token去获取用户信息
-                    
-                    this.$router.push("home")
+                    getMenus().then(res=>{
+                        console.log(res);
+                    })
+                    // this.$router.push("home")
                 }
             })
         }

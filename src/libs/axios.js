@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getStore, setStore } from "@/utils/localstoreage.js"
+import { Message ,Modal} from "element-ui"
+
 
 // 超时设定
 axios.defaults.timeout = 300000;
@@ -13,7 +15,17 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
+    console.log(response);
+    const data = response.data
+    console.log(data);  
     switch (data.code) {
+        case 200:
+            if (data.message !== null) {
+                Message.success(data.message);
+            } else {
+                Message.error("未知错误");
+            }
+            break;
         case 401:
             // debugger
             // 未登录 清除已登录状态

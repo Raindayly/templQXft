@@ -12,9 +12,9 @@ const routes = [
     name: 'login',
     component: () => import('@/views/login/login/login.vue')
   },
-  {
+  // {
     
-  }
+  // }
 ];
 
 
@@ -23,18 +23,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-// const originalPush = VueRouter.prototype.push
-// const originalReplace = VueRouter.prototype.replace
-// // push
-// VueRouter.prototype.push = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
-//   return originalPush.call(this, location).catch(err => err)
-// };
-// // replace
-// VueRouter.prototype.replace = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
-//   return originalReplace.call(this, location).catch(err => err)
-// };
+
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {

@@ -1,3 +1,4 @@
+import router from "@/router/index.js"
 const pageInfo = {
     state: {
         menus:[]
@@ -5,6 +6,7 @@ const pageInfo = {
     mutations: {
         vuexSetMenus (state,data) {
             state.menus = data
+            router.addRoute(...data)
         }
     }
 }

@@ -51,16 +51,12 @@
 
 <script>
 
-  import requset from "../../utils/request";
-  import {setRoutes} from "../../router";
 
   export default {
     name: 'HomeView',
     components: {},
     created() {
       this.initMenus()
-      this.initMianBaoxue()
-      setRoutes
     },
     data() {
       return {
@@ -71,11 +67,8 @@
       }
     },
     methods:{
-      initMianBaoxue(){
-      },
       initMenus(){
-        let menus = localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")).menus:{}
-        this.menus = menus?menus[0].children:null
+        this.menus = this.$store.state.pageInfo.menus
       },
       updateUserInfo(){
         this.userinfo = localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{}

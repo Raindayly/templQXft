@@ -30,28 +30,30 @@ router.beforeEach((to, from, next) => {
     next();
     return
   }
-  let isTokenTimeOut = getStore("isTokenTimeOut")
-  if (isTokenTimeOut == null) {
-    if (getStore("user") != null) {
-      setStore("isTokenTimeOut", "false")
-      next()
-    } else {
-      tempMenus = []
-      next("/login")
-      vm.$message.error("本地存储丢失,请重新登录!")
-    }
-  } else if (isTokenTimeOut) {
-    setStore("isTokenTimeOut", "false")
-    next("/login")
-    vm.$message.error("认证过期,请重新登录!")
-  } else {
-    if (to.path === "/" || to.path === "/home") {
-      setRoutes()
-      next("/home/index")
-    } else {
-      next()
-    }
-  }
+  next()
+  // if()
+  // let isTokenTimeOut = getStore("isTokenTimeOut")
+  // if (isTokenTimeOut == null) {
+  //   if (getStore("user") != null) {
+  //     setStore("isTokenTimeOut", "false")
+  //     next()
+  //   } else {
+  //     tempMenus = []
+  //     next("/login")
+  //     vm.$message.error("本地存储丢失,请重新登录!")
+  //   }
+  // } else if (isTokenTimeOut) {
+  //   setStore("isTokenTimeOut", "false")
+  //   next("/login")
+  //   vm.$message.error("认证过期,请重新登录!")
+  // } else {
+  //   if (to.path === "/" || to.path === "/home") {
+  //     setRoutes()
+  //     next("/home/index")
+  //   } else {
+  //     next()
+  //   }
+  // }
 });
 
 

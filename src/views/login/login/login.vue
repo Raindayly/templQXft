@@ -63,10 +63,11 @@ export default {
                 const loginRes = await login(this.submitForm)
                 this.throwError(loginRes)
                 this.$message.success(loginRes.message)
+                setStore("token",loginRes.result)
                 const userRes = await getUser()
-                console.log(userRes);
                 setStore("userInfo",userRes.result)
                 utils.initRouter(this)
+                this.$router.push("/home/index")
             } catch (error) {
                 this.$message.error(error)
             }

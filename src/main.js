@@ -17,6 +17,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI,{size:'small'});
 Vue.use(VueRouter)
 
+
 //初始化vue原型
 initVuePrototype(Vue)
 

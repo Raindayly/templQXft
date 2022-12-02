@@ -7,7 +7,8 @@ const pageInfo = {
         vuexSetMenus (state,data) {
             state.menus = data
             router.addRoute(...data)
-        }
-    }
+        },
+    }       
 }
+
 export default pageInfo;

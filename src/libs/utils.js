@@ -1,6 +1,6 @@
 const utils = {}
 import { hexMd5 } from "./md5.js";
-import { getStore } from "@/utils/localstoreage.js"
+import { getStore, rmStore } from "@/utils/localstoreage.js"
 import { getMenus } from "@/apis/userInfo.js";
 import lazyLoading from "./lazyLoading"
 
@@ -20,15 +20,19 @@ utils.initRouter = async function (vm) {
     const hasUserInfo = !!getStore("userInfo")
     const hasToken = !!getStore("token")
     const isLogin = hasUserInfo && hasToken
-    if(!isLogin) return
+    if(!isLogin) {
+        vm.$router.push("/login")
+        return
+    }
     //过滤路由格式
     try {
         const menus =  await getMenus()
         initRoutesNode(menus.result,menusRoute)
-        console.log(menusRoute);
         vm.$store.commit("vuexSetMenus",menusRoute)
     } catch (error) {
-        throw new Error(error)
+        rmStore("userInfo")
+        rmStore("token")
+        vm.$message.error("初始化菜单失败,请重新登录")
     }
     
 }
@@ -43,7 +47,6 @@ function initRoutesNode(source,target){
         el.children = childTarget
     }
 }
-const lazyLoad =  (url) =>()=>import(`@/views/${url}.vue`)
 
 
 utils.md5 = function (s){

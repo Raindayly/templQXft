@@ -1,16 +1,9 @@
 <template>
   <el-container style="height: 100vh; ">
-    <el-aside  style="width:auto;background-color: rgb(238, 241, 246);height: 100%">
-      <el-menu background-color="#545c64" class="el-menu-vertical-demo" style="height: 100%;color: #cccccc"  :collapse="!isCollapse" >
-
-        <template v-for="(item,index) in menus" >
-          <el-submenu v-if="item.children.length!=0" :index="index.toString()" :key="index"  @click="pushPath(item.path)">
-            <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-            <el-menu-item v-for="(child,index2) in item.children" @click="pushPath(child.path)" :key="index2"><i :class="child.icon"></i>{{ child.name }} </el-menu-item>
-          </el-submenu>
-          <el-menu-item v-else  @click="pushPath(item.path)"  :key="index"><i :class="item.icon"></i>{{ item.name }} </el-menu-item>
-        </template>
-
+    <el-aside >
+      <!-- {{menus}} -->
+      <el-menu router>
+          <recursionMenu  v-for="item in menus" :menu="item"  :key="item.path" :path="item.path"></recursionMenu>
       </el-menu>
     </el-aside>
 
@@ -50,12 +43,13 @@
 </template>
 
 <script>
-
-
+import recursionMenu from "@/components/homeMain/homeMain.vue"
   export default {
-    name: 'HomeView',
-    components: {},
-    created() {
+    name: 'Home',
+    components: {
+      recursionMenu
+    },
+    mounted() {
       this.initMenus()
     },
     data() {
@@ -69,6 +63,7 @@
     methods:{
       initMenus(){
         this.menus = this.$store.state.pageInfo.menus
+        console.log(this.menus);
       },
       updateUserInfo(){
         this.userinfo = localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{}
@@ -108,17 +103,8 @@
 </script>
 
 <style scoped>
-
-  /*:deep(.myAvatar img){*/
-  /*  width: 100%;*/
-  /*  height: 100%;*/
-  /*}*/
   .el-menu{
     border-right:none;
-  }
-  .el-menu-item ,.el-submenu >>> .el-submenu__title{
-    color: #f7f7f7;
-    min-width: 200px;
   }
   .avatar {
     width: 30px;

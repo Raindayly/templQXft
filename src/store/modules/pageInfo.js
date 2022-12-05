@@ -6,8 +6,13 @@ const pageInfo = {
     mutations: {
         vuexSetMenus (state,data) {
             state.menus = data
+            console.log(data);
             router.addRoute(...data)
         },
+        vuexRmMenus(state){
+            state.menus = []
+            // router.removeRoutes()
+        }
     }       
 }
 

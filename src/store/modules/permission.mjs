@@ -1,5 +1,5 @@
 import lazyLoading from "../../libs/lazyLoading.mjs"
-import { getMenus } from "@/apis/userInfo.js";
+import { getMenus } from "@/api/userInfo.js";
 
 
 /**

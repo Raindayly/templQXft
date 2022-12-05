@@ -1,7 +1,7 @@
 const utils = {}
 import { hexMd5 } from "./md5.js";
 import { getStore, rmStore } from "@/utils/localstoreage.js"
-import { getMenus } from "@/apis/userInfo.js";
+import { getMenus } from "@/api/userInfo.js";
 import lazyLoading from "./lazyLoading.mjs"
 
 utils.initRouter = async function (vm) {

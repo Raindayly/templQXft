@@ -4,6 +4,7 @@ import utils from "@/libs/utils";
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+import store from "@/store";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -30,29 +31,40 @@ const router = new VueRouter({
 
 router.beforeEach( async (to, from, next) => {
 
+  console.log(to);
   // start progress bar
   NProgress.start()
 
-  const hasToken = getStore("token")
+  const whiteList = ['/login', '/auth-redirect']
+  const hasToken = !!getStore("token")
+  const hasUserInfo = !!getStore("userInfo")
 
   if(hasToken){
-    if (to.path === "/login" || to.path === "/register" || to.name === "error-404") {
-      next();
-      return
+    if (to.path === "/login") {
+      next("/");
+      NProgress.done()
     }else {
-      const hasUserInfo = !!getStore("userInfo")
-      const hasToken = !!getStore("token")
-      if (hasUserInfo && hasToken) {
+      if (hasUserInfo) {
         if(to.path === "/"){
           next("/home/index")
         }
-        next()
-        return 
+        next() 
       }else{
+        await store.dispatch("userInfo/getUserInfo")
         if(to.path !== "/login") next("/login")
         utils.initStore()
-        return
       }
+    }
+  }else{
+    /* has no token*/
+
+    if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
     }
   }
   
@@ -60,5 +72,9 @@ router.beforeEach( async (to, from, next) => {
   
 });
 
+router.afterEach(() => {
+  // finish progress bar
+  NProgress.done()
+})
 
 export default router

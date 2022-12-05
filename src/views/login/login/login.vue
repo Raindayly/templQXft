@@ -16,10 +16,10 @@
                 </el-form-item>
                 <div class="position-relative">
                     <el-form-item prop="password" label="密码" >
-                        <el-input v-model="submitForm.password"></el-input>
+                        <el-input type="password" v-model="submitForm.password"></el-input>
                     </el-form-item>
                     <el-form-item style="margin-top: 45px;">
-                        <el-button @click="login" style="width:300px">登录</el-button>
+                        <el-button @click="login" :loading="loading" style="width:300px">登录</el-button>
                     </el-form-item>
                     <a href="" class="label-link position-absolute right-0" style="top:10px">忘记密码?</a>
                 </div>
@@ -36,18 +36,28 @@
 <script>
 import utils from '@/libs/utils';
 import {getStore , setStore} from '@/utils/localstoreage.js'
-import { login , getUser } from '@/apis/userInfo.js'
+import { login , getUser } from '@/api/userInfo.js'
+import JSEncrypt from 'jsencrypt'
 export default {
     data() {
         return {
-            submitForm:{
-                userName:'',
-                password:''
+            submitForm: {
+                userName: '',
+                password: ''
             },
-            submitValidate:{
+            submitValidate: {
 
             },
-            theme:true
+            publicKey: `-----BEGIN PUBLIC KEY-----
+                        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDbOYcY8HbDaNM9ooYXoc9s+R5o
+                        R05ZL1BsVKadQBgOVH/kj7PQuD+ABEFVgB6rJNi287fRuZeZR+MCoG72H+AYsAhR
+                        sEaB5SuI7gDEstXuTyjhx5bz0wUujbDK4VMgRfPO6MQo+A0c95OadDEvEQDG3KBQ
+                        wLXapv+ZfsjG7NgdawIDAQAB
+                        -----END PUBLIC KEY-----`,
+            redirect: '',
+            theme: true,
+            otherQuery: {},
+            loading: false
         }
     },
     methods: {
@@ -58,20 +68,28 @@ export default {
                 window.document.documentElement.setAttribute("theme","dark");
             }
         },
-        async login(){
-            try {
-                const loginRes = await login(this.submitForm)
-                this.throwError(loginRes)
-                this.$message.success(loginRes.message)
-                setStore("token",loginRes.result)
-                const userRes = await getUser()
-                setStore("userInfo",userRes.result)
-                utils.initRouter(this)
-                this.$router.push("/home/index")
-            } catch (error) {
-                this.$message.error(error)
-            }
-
+        get(){
+        const get = fetch("http://localhost:9099/user")
+        get.then(response => {
+            console.log(response);
+        })
+    },
+        login(){
+            // 密码RSA加密处理
+            const encryptor = new JSEncrypt()
+            // 设置公钥
+            encryptor.setPublicKey(this.publicKey)
+            // 加密密码
+            const encPassword = encryptor.encrypt(this.submitForm.password)
+            this.loading = true
+            this.$store.dispatch("userInfo/login",{userName : this.submitForm.userName,password : encPassword})
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
         },
         
     },

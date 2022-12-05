@@ -1,4 +1,5 @@
-import { getStore } from "@/utils/localstoreage";
+import { getStore, setStore } from "@/utils/localstoreage";
+import { login , getUserInfo } from "@/api/userInfo";
 
 const state = {
     token: getStore("token"),
@@ -23,23 +24,24 @@ const mutations = {
 const actions = {
     // user login
     login({ commit }, userInfo) {
-        const { username, password } = userInfo
+        const { userName, password } = userInfo 
         return new Promise((resolve, reject) => {
-            login({ username: username.trim(), password: password }).then(response => {
+            login({ username: userName, password: password }).then(response => {
                 const { data } = response
                 commit('SET_TOKEN', data.token)
-                setToken(data.token)
+                setStore("token",data.token)
                 resolve()
             }).catch(error => {
                 reject(error)
             })
         })
     },
+    
 
     // get user info
-    getInfo({ commit, state }) {
+    getUserInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
-            getInfo(state.token).then(response => {
+            getUserInfo({token: state.token}).then(response => {
                 const { data } = response
 
                 if (!data) {
@@ -79,12 +81,15 @@ const actions = {
             })
         })
     },
-
+    
+}
+const getters = {
 
 }
 export default {
     namespaced: true,
     state,
+    mutations,
     getters,
     actions,
 };

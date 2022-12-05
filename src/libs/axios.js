@@ -19,13 +19,13 @@ axios.interceptors.response.use(response => {
 })
 
 export const getRequest = (url, params) => {
-    let token = getStore('token')
     return axios({
         method: 'get',
         url: `${url}`,
         params: params,
         headers: {
-            'token': token,
+            Token: getStore('Token') || "",
+            Cookie: getStore('Cookie') || ""
         }
     });
 };
@@ -36,15 +36,7 @@ export const postRequest = (url, params) => {
         method: 'post',
         url: `${url}`,
         data: params,
-        transformRequest: [function (data) {
-            let ret = '';
-            for (let it in data) {
-                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
-            }
-            return ret;
-        }],
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
             'token': token,
         },
     });

@@ -51,7 +51,7 @@ function initRoutesNode(source,target){
 
 utils.initStore = function(vm){
     rmStore("userInfo")
-    rmStore("token")
+    rmStore("Token")
     if(vm) vm.$store.commit("vuexRmMenus")
 }
 

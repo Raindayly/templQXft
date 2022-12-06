@@ -1,24 +1,30 @@
 import { getStore, setStore } from "@/utils/localstoreage";
 import { login , getUserInfo } from "@/api/userInfo";
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import router, { resetRouter } from '@/router'
 
 const state = {
-    token: getStore("token"),
-    name: '',
+    token: getStore("Token"),
     avatar: '',
-    // introduction: '',
     roles: []
 }
 
 const mutations = {
-    SET_AVATAR: (state, avatar) => {
-        state.avatar = avatar
-    },
     SET_ROLES: (state, roles) => {
         state.roles = roles
     },
     SET_TOKEN: (state, token) => {
         state.token = token
     },
+    SET_AVATAR: (state, avatar) => {
+        state.avatar = avatar
+      },
+    RM_TOKEN: (state) => {
+        state.token = ''
+    },
+    RM_ROLES: (state) => {
+        state.roles = []
+    }
 }
 
 const actions = {
@@ -29,7 +35,7 @@ const actions = {
             login({ username: userName, password: password }).then(response => {
                 const { data } = response
                 commit('SET_TOKEN', data.token)
-                setStore("token",data.token)
+                setToken(data.token)
                 resolve()
             }).catch(error => {
                 reject(error)
@@ -48,14 +54,17 @@ const actions = {
                     reject('Verification failed, please Login again.')
                 }
 
-                const { roles, name, avatar } = data
-
+                const { roles, name, avatar } = data.userInfo
+                // roles must be a non-empty array
+                if (!roles || roles.length <= 0) {
+                    reject('getInfo: roles must be a non-null array!')
+                }
 
                 commit('SET_ROLES', roles)
-                commit('SET_NAME', name)
+                // commit('SET_NAME', name)
                 commit('SET_AVATAR', avatar)
                 // commit('SET_INTRODUCTION', introduction)
-                resolve(data)
+                resolve(data.userInfo)
             }).catch(error => {
                 reject(error)
             })
@@ -81,15 +90,22 @@ const actions = {
             })
         })
     },
+
+    //reset token
+    resetToken({ commit }) {
+        return new Promise(resolve => {
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            removeToken()
+            resolve()
+        })
+    },
     
 }
-const getters = {
 
-}
 export default {
     namespaced: true,
     state,
     mutations,
-    getters,
     actions,
 };

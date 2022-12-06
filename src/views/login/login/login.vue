@@ -11,15 +11,15 @@
         </div>
         <div class="all">
             <el-form :rules="submitValidate" ref="loginForm" >
-                <el-form-item prop="username" label="用户名">
-                    <el-input v-model="submitForm.userName"></el-input>
+                <el-form-item  prop="username" label="用户名">
+                    <el-input ref="username" v-model="submitForm.userName"></el-input>
                 </el-form-item>
                 <div class="position-relative">
                     <el-form-item prop="password" label="密码" >
-                        <el-input type="password" v-model="submitForm.password"></el-input>
+                        <el-input  ref="password" type="password" v-model="submitForm.password"></el-input>
                     </el-form-item>
                     <el-form-item style="margin-top: 45px;">
-                        <el-button @click="login" :loading="loading" style="width:300px">登录</el-button>
+                        <el-button @click.native.prevent="login" :loading="loading" style="width:300px">登录</el-button>
                     </el-form-item>
                     <a href="" class="label-link position-absolute right-0" style="top:10px">忘记密码?</a>
                 </div>
@@ -34,9 +34,6 @@
     </div>
 </template>
 <script>
-import utils from '@/libs/utils';
-import {getStore , setStore} from '@/utils/localstoreage.js'
-import { login , getUser } from '@/api/userInfo.js'
 import JSEncrypt from 'jsencrypt'
 export default {
     data() {
@@ -54,12 +51,19 @@ export default {
                         sEaB5SuI7gDEstXuTyjhx5bz0wUujbDK4VMgRfPO6MQo+A0c95OadDEvEQDG3KBQ
                         wLXapv+ZfsjG7NgdawIDAQAB
                         -----END PUBLIC KEY-----`,
-            redirect: '',
+            redirect: undefined,
             theme: true,
             otherQuery: {},
             loading: false
         }
     },
+    mounted() {
+    if (this.submitForm.userName === '') {
+      this.$refs.username.focus()
+    } else if (this.submitForm.password === '') {
+      this.$refs.password.focus()
+    }
+  },
     methods: {
         wicg(value){
             if(value){
@@ -68,12 +72,6 @@ export default {
                 window.document.documentElement.setAttribute("theme","dark");
             }
         },
-        get(){
-        const get = fetch("http://localhost:9099/user")
-        get.then(response => {
-            console.log(response);
-        })
-    },
         login(){
             // 密码RSA加密处理
             const encryptor = new JSEncrypt()
@@ -84,7 +82,9 @@ export default {
             this.loading = true
             this.$store.dispatch("userInfo/login",{userName : this.submitForm.userName,password : encPassword})
             .then(() => {
+
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+
               this.loading = false
             })
             .catch(() => {

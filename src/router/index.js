@@ -1,6 +1,5 @@
 import VueRouter from "vue-router";
-import { getStore, rmStore, setStore } from "@/utils/localstoreage";
-import utils from "@/libs/utils";
+import { getToken } from '@/utils/auth' 
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -15,8 +14,9 @@ const routes = [
     component: () => import('@/views/login/login/login.vue')
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
+    redirect:"/home",
     component: () => import('@/views/pages/Home.vue')
   },
 ];
@@ -30,29 +30,31 @@ const router = new VueRouter({
 
 
 router.beforeEach( async (to, from, next) => {
-
-  console.log(to);
   // start progress bar
   NProgress.start()
 
   const whiteList = ['/login', '/auth-redirect']
-  const hasToken = !!getStore("token")
-  const hasUserInfo = !!getStore("userInfo")
+  const hasToken = !!getToken()
 
   if(hasToken){
     if (to.path === "/login") {
-      next("/");
+      next({ path: '/' }) 
       NProgress.done()
     }else {
-      if (hasUserInfo) {
-        if(to.path === "/"){
-          next("/home/index")
-        }
-        next() 
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
+        next()
       }else{
-        await store.dispatch("userInfo/getUserInfo")
-        if(to.path !== "/login") next("/login")
-        utils.initStore()
+        try {
+          const { roles } = await store.dispatch("userInfo/getUserInfo")
+          console.log(to);
+          next({...to, replace: true })
+        } catch (error) {
+          await store.dispatch('userInfo/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
+        }
       }
     }
   }else{
@@ -67,14 +69,18 @@ router.beforeEach( async (to, from, next) => {
       NProgress.done()
     }
   }
-  
-  
-  
 });
 
-router.afterEach(() => {
-  // finish progress bar
+router.afterEach((to) => {
   NProgress.done()
 })
+
+//重置router要使用这个方法
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
 
 export default router

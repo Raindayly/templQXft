@@ -26,7 +26,7 @@ export const vm = new Vue({
   store:store,
   render: h => h(App),
   mounted() {
-    utils.initRouter(this)
+    // utils.initRouter(this)
   },
 }).$mount('#app')
 

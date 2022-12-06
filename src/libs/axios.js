@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getStore, setStore } from "@/utils/localstoreage.js"
 import { Message ,Modal} from "element-ui"
+import { getToken } from '@/utils/auth';
 
 
 // 超时设定
@@ -8,7 +9,8 @@ axios.defaults.timeout = 300000;
 
 // http request 拦截器
 axios.interceptors.request.use(config => {
-    return config;
+        config.headers['Authorization'] = 'Bearer ' + getToken()
+        return config;
 }, err => {
     Message.error('请求超时');
     return Promise.resolve(err);
@@ -23,36 +25,23 @@ export const getRequest = (url, params) => {
         method: 'get',
         url: `${url}`,
         params: params,
-        headers: {
-            Token: getStore('Token') || "",
-            Cookie: getStore('Cookie') || ""
-        }
     });
 };
 
 export const postRequest = (url, params) => {
-    let token = getStore('token')
     return axios({
         method: 'post',
         url: `${url}`,
         data: params,
-        headers: {
-            'token': token,
-        },
     });
 };
 
 // json提交复杂参数
 export const postComplexRequest = (url, params) => {
-    let token = getStore('token')
     return axios({
         method: 'post',
         url: `${url}`,
         data: params,
-        headers: {
-            'Content-Type': 'application/json',
-            'token': token,
-        }
     });
 };
 

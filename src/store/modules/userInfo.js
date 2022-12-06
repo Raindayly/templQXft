@@ -47,7 +47,7 @@ const actions = {
     // get user info
     getUserInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
-            getUserInfo({token: state.token}).then(response => {
+            getUserInfo().then(response => {
                 const { data } = response
 
                 if (!data) {

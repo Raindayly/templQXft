@@ -7,7 +7,7 @@ export const login = function (params) {
 }
 
 export const getMenus = function (params) {
-    return getRequest(baseUrl+'/menu/allmenus',params)
+    return getRequest(baseUrl+'/menu/tree',params)
 }
 
 export const getUserInfo = function (params) {

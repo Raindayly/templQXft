@@ -7,7 +7,13 @@ import store from "@/store";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const routes = [
+
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+const constantRoutes = [
   {
     path: '/login',
     name: 'login',
@@ -17,7 +23,14 @@ const routes = [
     path: '/',
     name: 'home',
     redirect:"/home",
-    component: () => import('@/views/pages/Home.vue')
+    component: () => import('@/views/pages/Home.vue'),
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        // component: () => import('@/views/pages/Home.vue')
+      }
+    ]
   },
 ];
 
@@ -25,7 +38,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: constantRoutes
 })
 
 
@@ -46,13 +59,23 @@ router.beforeEach( async (to, from, next) => {
         next()
       }else{
         try {
+
           const { roles } = await store.dispatch("userInfo/getUserInfo")
-          console.log(to);
+
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          router.addRoutes(accessRoutes)
+
           next({...to, replace: true })
+
         } catch (error) {
+
           await store.dispatch('userInfo/resetToken')
+
           Message.error(error || 'Has Error')
+
           next(`/login?redirect=${to.path}`)
+
           NProgress.done()
         }
       }

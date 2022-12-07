@@ -1,19 +1,26 @@
 import router from "@/router/index.js"
-const pageInfo = {
-    state: {
-        menus:[]
-    },
-    mutations: {
-        vuexSetMenus (state,data) {
-            state.menus = data
-            console.log(data);
-            router.addRoute(...data)
-        },
-        vuexRmMenus(state){
-            state.menus = []
-            // router.removeRoutes()
-        }
-    }       
+
+const state = {
+    menus: []
 }
 
-export default pageInfo;
+const actions = {
+
+}
+
+const mutations = {
+    SET_MENUS (state,data) {
+        state.menus = data
+    },
+    DEL_MENUS(state){
+        state.menus = []
+    }
+}
+
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions,
+};

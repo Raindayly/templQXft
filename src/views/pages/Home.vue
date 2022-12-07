@@ -3,7 +3,7 @@
     <el-aside >
       <!-- {{menus}} -->
       <el-menu router>
-          <recursionMenu  v-for="item in menus" :menu="item"  :key="item.path" :path="item.path"></recursionMenu>
+          <recursionMenu  v-for="item in permission_routes" :menu="item"  :key="item.path" :path="item.path"></recursionMenu>
       </el-menu>
     </el-aside>
 
@@ -44,6 +44,8 @@
 
 <script>
 import recursionMenu from "@/components/homeMain/homeMain.vue"
+import permission from "@/store/modules/permission.mjs"
+import { mapGetters } from 'vuex'
   export default {
     name: 'Home',
     components: {
@@ -51,6 +53,9 @@ import recursionMenu from "@/components/homeMain/homeMain.vue"
     },
     mounted() {
       this.initMenus()
+    },
+    computed:{
+      ...mapGetters(['permission_routes'])
     },
     data() {
       return {
@@ -82,9 +87,8 @@ import recursionMenu from "@/components/homeMain/homeMain.vue"
       handleCommand(command){
         switch (command) {
           case "loginout":
+            this.$store.dispatch("userInfo/resetToken")
             this.$router.push("/login");
-            localStorage.removeItem("user");
-            localStorage.removeItem("menus");
             break;
           case "goProfile":
             this.$router.push("/home/person");

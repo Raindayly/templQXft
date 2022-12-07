@@ -28,7 +28,7 @@ const constantRoutes = [
       {
         path: 'home',
         name: 'home',
-        // component: () => import('@/views/pages/Home.vue')
+        component: () => import('@/views/pages/Main.vue')
       }
     ]
   },

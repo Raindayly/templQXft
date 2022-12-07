@@ -1,12 +1,12 @@
 <template>
     <el-submenu :index="path" v-if="(menu.children&&menu.children.length>0)"> 
         <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>{{menu.name}}</span>
+            <i :class="menu.icon"></i>
+            <span>{{menu.title}}</span>
         </template>
         <recursionMenu  v-for="item in menu.children" :menu="item"  :key="item.path" :path="item.path"></recursionMenu>
     </el-submenu>
-    <el-menu-item :index="path" v-else>{{menu.name}}</el-menu-item>
+    <el-menu-item :index="path" v-else><i :class="menu.icon"></i><span>{{menu.title}}</span></el-menu-item>
 </template>
 
 <script>

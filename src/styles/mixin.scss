@@ -8,3 +8,11 @@
 @mixin theme-dark {
     --test-var-color: #000000
 }
+
+@mixin clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }

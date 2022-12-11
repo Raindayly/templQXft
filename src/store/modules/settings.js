@@ -1,5 +1,6 @@
-import variables from '@/styles/element-variables.scss'
+import variables from '@/styles/element-variables.module.scss'
 import defaultSettings from '@/settings'
+
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
 
@@ -12,7 +13,6 @@ const state = {
 }
 
 function chengeTheme(name,value) {
-    console.log(getCssVar(name));
     if(getCssVar(name)){
         setCssVar(name,value)
     }

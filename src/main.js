@@ -1,15 +1,19 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+
+
+
+import './initStyle.js'
+import '@/styles/index.scss'
+
+
 import ElementUI from 'element-ui';
 import VueRouter from "vue-router";
-import store from './store'
 import * as echarts from 'echarts';
 import { initVuePrototype } from "@/libs/initVuePrototype.js"
 
-import './initStyle.js'
-
-import '@/styles/index.scss'
+import App from './App.vue'
+import store from './store'
+import router from './router'
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
@@ -20,7 +24,7 @@ Vue.use(VueRouter)
 //初始化vue原型
 initVuePrototype(Vue)
 
-export const vm = new Vue({
+new Vue({
   router,
   store:store,
   render: h => h(App),

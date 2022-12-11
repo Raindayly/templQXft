@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles/index.scss";
-@import "@/styles/variables.scss";
+@import "@/styles/variables.module.scss";
     .setting-btn{
       position: fixed;
       right: 20px;

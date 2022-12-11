@@ -1,5 +1,5 @@
 import axios from "axios";
-import {vm} from "@/main";
+
 import {setStore} from "@/utils/localstoreage";
 
 const requset = axios.create({

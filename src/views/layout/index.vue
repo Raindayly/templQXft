@@ -12,13 +12,14 @@
         <!-- <settings /> -->
       <!-- </right-panel> -->
     </div>
+    <Settings />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 // import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
-import { Sidebar ,TagsView ,AppMain} from './components'
+import { Sidebar ,TagsView ,AppMain,Settings} from './components'
 
 export default {
   name: 'layout',
@@ -26,7 +27,7 @@ export default {
     AppMain,
     // Navbar,
     // RightPanel,
-    // Settings,
+    Settings,
     Sidebar,
     TagsView
   },
@@ -49,7 +50,7 @@ export default {
   },
     methods: {
       handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      this.$store.dispatch('appInfo/closeSideBar', { withoutAnimation: false })
     }
   }
 }
@@ -57,6 +58,7 @@ export default {
 
 <style lang="scss" scoped>
     @import "~@/styles/mixin.scss";
+    @import "~@/styles/variables.scss";
 
     .app-wrapper {
       @include clearfix;
@@ -77,5 +79,21 @@ export default {
     height: 100%;
     position: absolute;
     z-index: 999;
+  }
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
+  }
+
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
+  }
+
+  .mobile .fixed-header {
+    width: 100%;
   }
 </style>

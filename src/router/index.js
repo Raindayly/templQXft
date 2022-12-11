@@ -28,10 +28,20 @@ const constantRoutes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import('@/views/pages/Main.vue')
+        component: () => import('@/views/pages/Main')
       }
     ]
   },
+  // {
+  //   path: '/system',
+  //   component: () => import('@/views/layout'),
+  //   children: [
+  //     {
+  //       path:'menu',
+  //       component: () => import('@/views/pages/Menu')
+  //     }
+  //   ]
+  // }
 ];
 
 

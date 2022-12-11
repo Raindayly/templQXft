@@ -1,20 +1,18 @@
 <template>
     <div>
-        <el-color-picker v-model="theme"></el-color-picker>
+        <el-color-picker v-model="theme" @active-change="colorChange"></el-color-picker>
     </div>
 </template>
 <script setup>
     import store from '@/store';
-    import { ref , watch } from 'vue';
+    import { ref } from 'vue';
     const theme = ref()
 
-    watch(theme,(val)=>{
-        
-
-        store.dispatch('settings/changeSetting',{
-            key: 'theme',
-            value: val
+    function colorChange(color){
+        console.log(theme.value);
+        store.dispatch('settings/changeTheme',{
+            name: 'menuBg',
+            value: color
         })
-        
-    })
+    }
 </script>

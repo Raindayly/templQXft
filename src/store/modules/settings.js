@@ -11,6 +11,21 @@ const state = {
     sidebarLogo: sidebarLogo
 }
 
+function chengeTheme(name,value) {
+    console.log(getCssVar(name));
+    if(getCssVar(name)){
+        setCssVar(name,value)
+    }
+}
+function setCssVar(cssvar,color){
+    cssvar = '--' + cssvar 
+    document.getElementsByTagName('body')[0].style.setProperty(cssvar,color)
+}
+
+function getCssVar(cssvar){
+    cssvar = '--' + cssvar
+    return document.getElementsByTagName('body')[0].style.getPropertyValue(cssvar)
+}
 
 const mutations = {
     CHANGE_SETTING: (state, { key, value }) => {
@@ -18,12 +33,19 @@ const mutations = {
         if (state.hasOwnProperty(key)) {
             state[key] = value
         }
+    },
+    CHANGE_THEME: (state, data) => {
+        const {name ,value} = data
+        chengeTheme(name,value)
     }
 }
 
 const actions = {
     changeSetting({ commit }, data) {
         commit('CHANGE_SETTING', data)
+    },
+    changeTheme({ commit }, data) {
+        commit('CHANGE_THEME', data)
     }
 }
   

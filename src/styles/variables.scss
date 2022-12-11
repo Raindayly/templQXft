@@ -13,11 +13,11 @@ $menuText:#bfcbd9;
 $menuActiveText:#409EFF;
 $subMenuActiveText:#41417f; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#80615a;
-$menuHover:#263445;
+$menuBg:var(--menuBg,red);
+$menuHover: var(--menuHover,#263445);
 
-$MenuItemBg:#7f66a2;
-$MenuItemHover:#001528;
+$MenuItemBg:var(--MenuItemBg,#7f66a2);
+$MenuItemHover: var(--MenuItemHover,#001528);
 
 $sideBarWidth: 210px;
 

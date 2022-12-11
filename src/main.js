@@ -7,6 +7,9 @@ import store from './store'
 import * as echarts from 'echarts';
 import { initVuePrototype } from "@/libs/initVuePrototype.js"
 
+import './initStyle.js'
+
+import '@/styles/index.scss'
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;

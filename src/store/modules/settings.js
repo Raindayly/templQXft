@@ -1,6 +1,7 @@
 import variables from '@/styles/element-variables.module.scss'
 import defaultSettings from '@/settings'
 
+import { setCssVar , getCssVar} from '@/libs/utils.js'
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
 
@@ -16,15 +17,6 @@ function chengeTheme(name,value) {
     if(getCssVar(name)){
         setCssVar(name,value)
     }
-}
-function setCssVar(cssvar,color){
-    cssvar = '--' + cssvar 
-    document.getElementsByTagName('body')[0].style.setProperty(cssvar,color)
-}
-
-function getCssVar(cssvar){
-    cssvar = '--' + cssvar
-    return document.getElementsByTagName('body')[0].style.getPropertyValue(cssvar)
 }
 
 const mutations = {

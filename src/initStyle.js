@@ -1,16 +1,14 @@
+import { setCssVar , getCssVar } from "./libs/utils"
 
-const varMap = {
-    'menuBg': '',
-    'menuHover': '',
-    'MenuItemBg': '',
-    'MenuItemHover': ''
+export const varMap = {
+    'menuBg': 'red',
+    'menuHover': 'blue',
+    'MenuItemBg': 'gray',
+    'MenuItemHover': 'green'
 }
 
 
-function setCssVar(cssvar,color){
-    cssvar = '--' + cssvar 
-    document.getElementsByTagName('body')[0].style.setProperty(cssvar,color)
-}
+
 
 for (const cssvar in varMap) {
     setCssVar(cssvar,varMap[cssvar])

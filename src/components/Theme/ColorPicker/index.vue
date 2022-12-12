@@ -4,16 +4,17 @@
     </div>
 </template>
 <script setup>
-    import { ref } from 'vue';
-    import cssvar from '@/styles/variables.module.scss'
+    import { computed, ref, watch } from 'vue'; 
+    import { varMap } from '@/initStyle.js'
     import store from '@/store';
-    const re = new RegExp(/#[0-z][0-z][0-z][0-z][0-z][0-z]/g)
-    const menuBg = cssvar.menuBg.match(re).pop()
-    const theme = ref(menuBg)
+    import { getCssVar } from '@/libs/utils.js'
+
+    const theme = ref(getCssVar('menuBg') ||varMap.menuBg)
+
 
     function colorChange(color){
         store.dispatch('settings/changeTheme',{
-            name: 'menuBg',
+            name: 'menuBg', 
             value: color
         })
         theme.value = color

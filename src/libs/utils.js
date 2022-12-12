@@ -61,4 +61,14 @@ utils.md5 = function (s){
 }
 
 
+export function setCssVar(name,color){
+    let cssvar = '--' + name 
+    document.getElementsByTagName('body')[0].style.setProperty(cssvar,color)
+}
+
+export function getCssVar(cssvar){
+    cssvar = '--' + cssvar
+    return document.getElementsByTagName('body')[0].style.getPropertyValue(cssvar)
+}
+
 export default utils

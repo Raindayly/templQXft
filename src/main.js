@@ -1,7 +1,5 @@
 import Vue from 'vue'
 
-
-
 import './initStyle.js'
 import '@/styles/index.scss'
 

@@ -6,7 +6,7 @@
     <div v-show="!hidden" class="setting-body xyFlexCenter ">
       <ul class="wh-100percent pd10">
         <li>
-          <color-picker></color-picker>
+          <color-picker @colorChange="colorChange"></color-picker>
         </li>
       </ul>
     </div>
@@ -15,6 +15,7 @@
 
 <script>
 import  ColorPicker  from '@/components/Theme/ColorPicker';
+import  store  from '@/store/index'
 export default {
   components: {
     ColorPicker
@@ -26,8 +27,13 @@ export default {
     }
 
   },
-  methods() {
-    
+  methods: {
+    colorChange(color){
+      store.dispatch('settings/changeTheme',{
+          name: 'menuBg', 
+          value: color
+      })
+    }
   }
 }
 </script>

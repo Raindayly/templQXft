@@ -34,6 +34,7 @@
     </div>
 </template>
 <script>
+import { initStyle } from '@/initStyle'
 import JSEncrypt from 'jsencrypt'
 export default {
     data() {
@@ -84,7 +85,7 @@ export default {
             .then(() => {
 
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-
+              initStyle()
               this.loading = false
             })
             .catch(() => {

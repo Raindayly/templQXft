@@ -14,3 +14,7 @@ export const getUserInfo = function (params) {
     return postRequest(baseUrl+'/user/info',params)
 }
 
+export const getThemeInfo = function (params) {
+    return postRequest(baseUrl+'/theme/info',params)
+}
+

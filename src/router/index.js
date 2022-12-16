@@ -4,6 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import store from "@/store";
+import { initStyle } from "@/initStyle";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -76,6 +77,7 @@ router.beforeEach( async (to, from, next) => {
 
           router.addRoutes(accessRoutes)
 
+
           next({...to, replace: true })
 
         } catch (error) {
@@ -105,6 +107,7 @@ router.beforeEach( async (to, from, next) => {
 });
 
 router.afterEach((to) => {
+  initStyle()
   NProgress.done()
 })
 
